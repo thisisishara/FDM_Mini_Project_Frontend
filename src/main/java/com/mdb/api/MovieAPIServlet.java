@@ -192,15 +192,15 @@ public class MovieAPIServlet extends HttpServlet {
 			thumbnailData = thumbnailData.substring( 1, thumbnailData.length() - 1 );
 			
 			cardStr += "<div class='col'>"
-					+ "<div class='card shadow-sm card-dark'>"
+					+ "<div class='card shadow-sm card-dark-custom'>"
 					+ "<div class='card-img-top' style='background-color:black; background:url("+ thumbnailData +"); background-repeat:no-repeat; background-size:cover; height:250px; width:100%'>"
 					+ "</div>"
 					+ "<div class='card-body' id='mcard'>"
-					+ "<h1 id='mname'>" + movie.get("name").getAsString() + "</h1>"
+					+ "<h5 id='mname'>" + movie.get("name").getAsString() + "</h5>"
 					+ "<p id='mgenre'>" + movie.get("genre").getAsString() + "</p>"
 					+ "<!--<p id='mdesc'>" + movie.get("desc").getAsString() + "</p>-->"+ "<div class='d-flex justify-content-between align-items-center'>"
 					+ "<div class='btn-group'>"
-					+ "<input name='movieview' id='movieview' type='button' value='View' class='btn btn-sm btn-secondary w-100' data-movieid='" + movie.get("movieid").getAsString() + "'></td>"
+					+ "<!--<input name='movieview' id='movieview' type='button' value='View' class='btn btn-sm btn-secondary w-100' data-movieid='" + movie.get("movieid").getAsString() + "'>--></td>"
 					+ "<input name='movieupdate' id='movieupdate' type='button' value='Update' class='btn btn-sm btn-secondary w-100' data-thumb='"+ thumbnailData +"' data-movieid='" + movie.get("movieid").getAsString() + "' data-moviedesc='" + movie.get("desc").getAsString() + "'></td>"
 					+ "<input name='moviedelete' id='moviedelete' type='button' value='Delete' class='btn btn-sm btn-danger w-100' data-movieid='" + movie.get("movieid").getAsString() + "'></td>"
 					+ "</div>"
