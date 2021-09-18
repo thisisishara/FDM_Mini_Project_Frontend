@@ -66,7 +66,7 @@ function onAuthenticationComplete(response, status) {
 	        if(role == "ADMIN") {
 	        	window.location.href = "AdminDashboard.jsp";
 	        } else {
-		       	window.location.href = "UserDashboard.jsp";
+		       	window.location.href = "MovieLibrary.jsp";
 	        }
         } else {
         	buildToast("bg-danger", "Couldn't Sign in", "Authentication Failed."+"\n"+resultSet.MESSAGE.trim(), "", "Media/error_red_sq.png")

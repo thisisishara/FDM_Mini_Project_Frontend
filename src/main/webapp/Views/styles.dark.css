@@ -219,3 +219,12 @@ table tr td:last-child, table tr th:last-child {
 	-o-background-size: cover;
 	background-size: cover;
 }
+
+.heromovielib {
+	background: None
+}
+
+.card-dark-custom {
+	background-color: #212121 !important;
+	color: white;
+}

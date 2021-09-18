@@ -267,7 +267,7 @@ $(document).on("click", "#userupdate", function (event) {
     var role = $(this).closest("tr").find('td:eq(5)').text();
     $("#userrole").val(role == "ADMIN" ? "Administrator" : "User");
     $("#usersignup").text("Update Account");
-    $("#usercancelupdate").removeClass("invisible");
+    $("#usercancelupdate").removeClass("invisible");    
 });
 
 //CANCEL RESEARCHER UPDATE
@@ -291,7 +291,7 @@ $(document).on("click", "#userdelete", function (event) {
             dataType: "text",
             complete: function (response, status) {
                 onUserDeleteComplete(response.responseText, status);
-                }
+            }
          });
 });
 
@@ -407,7 +407,7 @@ $(document).on("click", "#movieupdate", function (event) {
     $("#moviename").val($(this).closest("#mcard").find('#mname').text());
     $("#moviegenre").val($(this).closest("#mcard").find('#mgenre').text());
     $("#movieyear").val($(this).closest("#mcard").find('#myear').text());
-    $("#moviedesc").val($(this).closest("#mcard").find('#mdesc').text());
+    $("#moviedesc").val($(this).data('moviedesc'));
     $("#addmovie").text("Update Movie");
     $("#moviecancelupdate").removeClass("invisible");
     $("#moviethumb").css({"background": "url('"+$(this).data("thumb")+"')", "background-repeat":"no-repeat", "background-size":"cover"});
@@ -502,6 +502,7 @@ function onAccountStatusUpdateComplete(response, status) {
     }
 }
 
+//MOVIE THUMBNAIN HANDLING
 function readURL(input) {
 	if (input.files && input.files[0]) {
 		var reader = new FileReader();
@@ -521,6 +522,51 @@ function readURL(input) {
     }
 }
 
+
+//PREDICTING GENRES
+$(document).on("click", "#predictgenre", function (event) {
+	//Validate
+	var validationStatus = validatePredictionInputData();
+    if (validationStatus != true) {
+        buildToast("bg-danger", "Couldn't predict genres", validationStatus, "", "Media/error_red_sq.png");
+        $('.toast').toast('show');
+        return;
+    }
+	
+	//AJAX Call
+    $.ajax(
+        {
+            url: "MLAPI",
+            type: "GET",
+            data: "moviename="+ $("#moviename").val().trim() + "&moviedesc="+ $("#moviedesc").val().trim() +"&task=" + $(this).data("task") + "&algorithm=" + $("#algoselect").val().trim(),
+            dataType: "text",
+            complete: function (response, status) {
+                onPredictionComplete(response.responseText, status);
+            }
+         });
+});
+
+//PREDICT GENRES RESPONSE HANDLING
+function onPredictionComplete(response, status) {
+    if (status == "success") {
+        var resultSet = JSON.parse(response);
+
+        if (resultSet.STATUS.trim() == "SUCCESSFUL") {
+            buildToast("bg-success", "Genre Prediction Completed", "Movie Genres were predicted successfully. If the Genres are empty that means no genres were predicted. You can use your own set of genres instead of the suggested ones if necessary.", "", "Media/check_green.png");
+            $('.toast').toast('show');
+            $("#algoselect").val(resultSet.GENRES);
+        } else {
+            buildToast("bg-danger", "Error Occurred while Genre Predicting", resultSet.MESSAGE.trim(), "", "Media/error_red_sq.png");
+            $('.toast').toast('show');
+        }
+    } else if (status == "error") {
+        buildToast("bg-danger", "Couldn't predict genres", "Error occurred while predicting the genres.", "", "Media/error_red_sq.png");
+        $('.toast').toast('show');
+    } else {
+        buildToast("bg-danger", "Couldn't predict genres", "Unknown Error occurred while predicting the genres.", "", "Media/error_red_sq.png");
+        $('.toast').toast('show');
+    }
+}
 
 
 //----------------------------------------------------------------------------------------------------------------------------
@@ -597,6 +643,19 @@ function validateMovieForm() {
     return true;
 }
 
+//PREDICTION DATA VALIDATION
+function validatePredictionInputData() {
+    //VALIDATIONS
+    if ($("#moviename").val().trim() == "") {
+        return "Movie name cannot be empty.";
+    }
+
+    if ($("#moviedesc").val().trim() == "") {
+        return "Description cannot be empty.";
+    }
+	    
+    return true;
+}
 
 
 //PASSWORD VISIBILITY TOGGLE BUTTON EVENT HANDLING FOR SHOW/HIDE PASSWORDS
@@ -616,6 +675,9 @@ $(document).on("click", "#usershowpasswords", function (event) {
 //GENERIC METHOD TO BUILDING DIFFERENT STYLES OF TOASTS
 //STYLES ARE PASSED AS PARAMS
 function buildToast(bg, heading, body, time, icon) {
+	var date = new Date();
+	time = date.getHours() + ":" + ("00" + date.getMinutes()).slice(-2);
+	
     $("#liveToast").removeClass();
     $("#liveToast").addClass("toast hide text-white " + bg);
     $("#liveToastHeaderDiv").removeClass();

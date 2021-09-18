@@ -10,7 +10,7 @@
 <link href="Views/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="Views/styles.dark.css">
 
-<!-- Favicons -->
+<!-- FAVICONS -->
 <link rel="icon" href="Media/ticket.png" sizes="32x32" type="image/png">
 
 <title>theMovieDB &#8226; Admin Dashboard</title>
@@ -72,8 +72,8 @@
 			</ul>
 		</div>
 	</nav>
-	<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-		<div class="container-fluid">
+	<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="maintag">
+		<div class="container-fluid" id="maincontainer">
 			<div class="row sidebarpage" id="admindashboard">
 				<div
 					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -82,7 +82,6 @@
 						<!-- DASH HEADER CONTENTS -->
 					</div>
 				</div>
-				<!-- <div>Refer "User Management" link to Manage Users.</div>-->
 				<div class="container">
 					<div class="col-md-12 mb-4">
 						<div class="h-100 p-4 text-white bg-dark rounded-3 bgsec">
@@ -159,13 +158,9 @@
 									<input type="hidden" class="movieisupdate" name="movieisupdate"
 										id="movieisupdate" value="false"> <input type="hidden"
 										class="formtask" name="formtask" value="ADDMOVIE">
-									<div class="col-md-4">
+									<div class="col-md-8">
 										<input type="text" class="form-control" id="moviename"
 											name="moviename" placeholder="Movie Name">
-									</div>
-									<div class="col-md-4">
-										<input type="text" class="form-control" id="moviegenre"
-											name="moviegenre" placeholder="Genre">
 									</div>
 									<div class="col-md-4">
 										<input type="number" class="form-control" id="movieyear"
@@ -174,6 +169,23 @@
 									<div class="col-12">
 										<textarea class="form-control" id="moviedesc" rows="10"
 											name="moviedesc" placeholder="Description"></textarea>
+									</div>
+									<div class="col-md-9">
+										<select id="algoselect" name="algoselect" class="form-select">
+											<option selected>Decision Tree with TF-IDF</option>
+											<option>Decision Tree with Word2vec (Embeddings)</option>
+											<option>Decision Tree with CountVectorizer</option>
+											<option>Random Forest with TF-IDF</option>
+											<option>SVM with TF-IDF</option>
+										</select>
+									</div>
+									<div class="col-md-3">
+										<button type="button" class="btn btn-dark w-100" id="predictgenre"
+											name="predictgenre" data-task="classification">Predict Genres</button>
+									</div>
+									<div class="col-md-12">
+										<textarea class="form-control" id="moviegenre" rows="1"
+											name="moviegenre" placeholder="Genres"></textarea>
 									</div>
 								</div>
 							</div>

@@ -90,6 +90,59 @@ public class MovieDBHandler extends DBHandler{
 		}
 		return result;
 	}
+	
+	public JsonObject getMovie(String movieId) {		
+		JsonObject result = null;
+		JsonObject movie = new JsonObject();
+
+		try
+		{
+			Connection conn = getConnection();
+			if (conn == null) {
+				return new JsonResponseBuilder().getJsonErrorResponse("Operation has been terminated due to a database connectivity issue."); 
+			}
+
+			String query = "SELECT * FROM `movies` WHERE `movieid`=?;";
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			
+			preparedStmt.setString(1, movieId);
+
+			ResultSet rs = preparedStmt.executeQuery();
+
+			if(!rs.isBeforeFirst()) {
+				return new JsonResponseBuilder().getJsonFailedResponse("No Movies found under the given ID.");
+			}
+
+			while (rs.next())
+			{
+				movie.addProperty("movieid", rs.getString("movieid"));
+				movie.addProperty("name", rs.getString("moviename"));
+				movie.addProperty("year", rs.getString("year"));
+				movie.addProperty("genre", rs.getString("genre"));
+				movie.addProperty("desc", rs.getString("desc"));
+				
+				byte[] blobbytes = rs.getBytes("thumbnail");
+				
+				movie.addProperty("thumbnail", new String(blobbytes));
+
+			}
+			conn.close();
+
+			result = new JsonObject();
+			
+			JsonArray JsonArecomendationsJSONArray = null;
+
+			result.add("movieinfo", movie);			
+			result.add("recommendations", JsonArecomendationsJSONArray); //TODO Add recommendations to this array
+
+		}
+		catch (Exception ex)
+		{
+			result = new JsonResponseBuilder().getJsonExceptionResponse("Error occurred while retrieving movie data. Exception Details:" + ex.getMessage());
+			System.err.println(ex.getMessage());
+		}
+		return result;
+	}
 
 	public JsonObject updateMovie(String movieid, String name, String genre, String desc, String year, String thumbnail) {
 		JsonObject result = null;
