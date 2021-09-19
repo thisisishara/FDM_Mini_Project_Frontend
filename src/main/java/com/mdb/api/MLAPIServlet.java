@@ -9,13 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.JsonObject;
+import com.mdb.api.comm.MLServiceCommHandler;
 import com.mdb.db.MovieDBHandler;
 import com.mdb.util.JsonResponseBuilder;
 
 @WebServlet("/MLAPI")
 public class MLAPIServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	MovieDBHandler movieDBHandler;       
+	MovieDBHandler movieDBHandler = null;
+	MLServiceCommHandler mlServiceCommHandler = null;
     
     public MLAPIServlet() {
 		movieDBHandler = new MovieDBHandler();
@@ -23,12 +25,7 @@ public class MLAPIServlet extends HttpServlet {
     
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String moviename = request.getParameter("moviename");
-		String moviedesc = request.getParameter("moviedesc");
 		String task = request.getParameter("task");
-		String algorithm = request.getParameter("algorithm");
-		
-		System.out.println("ML DATA: "+moviename + " " + moviedesc + " " + task + " " + algorithm);
 		
 		JsonObject jsonResponse = null;
 		
@@ -87,17 +84,26 @@ public class MLAPIServlet extends HttpServlet {
 			return jsonResponse;
 		}
 
-		//call flask back-end to get predictions ???????????
-//		JsonObject movieInfo = movieDBHandler.getMovie(movieId);
+		//Call flask back-end to get predictions
+		mlServiceCommHandler = new MLServiceCommHandler();
+		String moviename = request.getParameter("moviename");
+		String moviedesc = request.getParameter("moviedesc");
+		String algorithm = request.getParameter("algorithm");
+		
+		//Test
+		System.out.println("ML DATA: "+moviename + " " + moviedesc + " " + algorithm);
+		
+		JsonObject payload = new JsonObject();
+		payload.addProperty("ALGO", algorithm);
+		payload.addProperty("PLOT", moviedesc);
+		System.out.print("\nADEY WORKS");
+		JsonObject predictions = mlServiceCommHandler.getPredictions(payload);
 
 		//test the response
-//		System.out.println("Movie Info Retrieved: " + movieInfo.toString());
-
-		//Generate HTML Content
-		String movieInfoContent = null;
+		System.out.println("Movie Genres Retrieved: " + predictions.toString());
 
 		jsonResponse = new JsonResponseBuilder().getJsonSuccessResponse("Genres Predicted.");
-		jsonResponse.addProperty("MOVIEINFO", movieInfoContent);
+		jsonResponse.addProperty("GENRES", predictions.get("GENRES").getAsString());
 
 		return jsonResponse;
 	}

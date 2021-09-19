@@ -554,7 +554,7 @@ function onPredictionComplete(response, status) {
         if (resultSet.STATUS.trim() == "SUCCESSFUL") {
             buildToast("bg-success", "Genre Prediction Completed", "Movie Genres were predicted successfully. If the Genres are empty that means no genres were predicted. You can use your own set of genres instead of the suggested ones if necessary.", "", "Media/check_green.png");
             $('.toast').toast('show');
-            $("#algoselect").val(resultSet.GENRES);
+            $("#moviegenre").val(resultSet.GENRES);
         } else {
             buildToast("bg-danger", "Error Occurred while Genre Predicting", resultSet.MESSAGE.trim(), "", "Media/error_red_sq.png");
             $('.toast').toast('show');

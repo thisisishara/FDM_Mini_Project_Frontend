@@ -7,7 +7,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mdb.util.JsonResponseBuilder;
 
-public class MovieDBHandler extends DBHandler{
+public class MovieDBHandler extends DBHandler{	
 	public JsonObject insertMovie(String name, String genre, String year, String desc, String thumbnail) {
 		try {
 			Connection conn = getConnection();

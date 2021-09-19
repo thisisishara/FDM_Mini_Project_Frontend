@@ -172,7 +172,7 @@
 									</div>
 									<div class="col-md-9">
 										<select id="algoselect" name="algoselect" class="form-select">
-											<option selected>Decision Tree with TF-IDF</option>
+											<option selected>Logistic Regression with TF-IDF</option>
 											<option>Decision Tree with Word2vec (Embeddings)</option>
 											<option>Decision Tree with CountVectorizer</option>
 											<option>Random Forest with TF-IDF</option>
