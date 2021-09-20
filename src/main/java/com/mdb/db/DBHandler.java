@@ -13,7 +13,7 @@ public class DBHandler {
 	private static final String password = "";
 	
 	//RDS
-	private static final String rds_host = "fdm-movie-database-ins.cklh4lbrma3l.us-east-1.rds.amazonaws.com";
+	private static final String rds_host = "fdm-database-ins-1.cklh4lbrma3l.us-east-1.rds.amazonaws.com";
 	private static final String rds_port = "3306";
 	private static final String rds_database = "fdmmvdb";
 	private static final String rds_username = "fdmmdbadmin";

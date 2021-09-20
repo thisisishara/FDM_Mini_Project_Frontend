@@ -172,11 +172,11 @@
 									</div>
 									<div class="col-md-9">
 										<select id="algoselect" name="algoselect" class="form-select">
-											<option selected>Logistic Regression with TF-IDF</option>
-											<option>Decision Tree with Word2vec (Embeddings)</option>
-											<option>Decision Tree with CountVectorizer</option>
-											<option>Random Forest with TF-IDF</option>
-											<option>SVM with TF-IDF</option>
+											<option selected>Logistic Regression with OneVsRest and TF-IDF</option>
+											<option>Linear SVC with OneVsRest and TF-IDF</option>
+											<option>Random Forest Classifier with OneVsRest and TF-IDF</option>
+											<option>Perceptron with OneVsRest and TF-IDF</option>
+											<option>Decision Tree Regressor with OneVsRest and TF-IDF</option>
 										</select>
 									</div>
 									<div class="col-md-3">
@@ -213,7 +213,7 @@
 							<strong>Existing Movies in the System</strong> <br>Following
 							is a list of all movies which have been already added.
 						</div>
-						<div class="movieGrid" id="movieGrid">
+						<div class="movieGrid mt-3" id="movieGrid">
 							<!-- DYNAMICALLY GENERATED MOVIE LIST TABLE -->
 						</div>
 					</div>

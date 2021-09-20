@@ -96,7 +96,7 @@ public class MLAPIServlet extends HttpServlet {
 		JsonObject payload = new JsonObject();
 		payload.addProperty("ALGO", algorithm);
 		payload.addProperty("PLOT", moviedesc);
-		System.out.print("\nADEY WORKS");
+		
 		JsonObject predictions = mlServiceCommHandler.getPredictions(payload);
 
 		//test the response
