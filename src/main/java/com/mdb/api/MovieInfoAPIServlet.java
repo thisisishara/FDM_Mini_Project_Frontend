@@ -24,7 +24,7 @@ public class MovieInfoAPIServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		JsonObject jsonResponse = getAllMovieInfo(request);
+		JsonObject jsonResponse = getMovieInfo(request);
 		response.getWriter().append(jsonResponse.toString());
 	}
 
@@ -61,7 +61,7 @@ public class MovieInfoAPIServlet extends HttpServlet {
 	}
 
 
-	private JsonObject getAllMovieInfo(HttpServletRequest request) {
+	private JsonObject getMovieInfo(HttpServletRequest request) {
 		//Making sure the Authorization Token Cookie is Available
 		Cookie authCookie = getAuthCookie(request);
 		JsonObject jsonResponse = null;
@@ -116,34 +116,27 @@ public class MovieInfoAPIServlet extends HttpServlet {
 				+ "<div class='card-img-top grid m-3' "
 				+ "style='background-color: black; background: url("+ thumbnailData +"); background-repeat: no-repeat; background-size: cover; height: 250px; width: 420px'>"
 				+ "</div> </div> </div> </div>"
+				//Recommendation Selection
+				+ "<div class='row g-3 mb-4'>"
+				+ "<div class='col-md-9'>"
+				+ "<select id='algoselect' name='algoselect' class='form-select'>"
+				+ "<option selected>FPG</option>"
+				+ "<option>APR</option>"
+				+ "</select>"
+				+ "</div>"
+				+ "<div class='col-md-3'>"
+				+ "<button type='button' class='btn btn-warning w-100' id='recommendmovies'"
+				+ "name='recommendmovies' data-task='association' data-movieid='" + movieObj.get("movieid").getAsString() + "'>Get Recommendations</button>"
+				+ "</div> </div>"
+				//Recommendation Grid area
 				+ "<div class='row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3'>"
 				+ "<div class='col w-100'>"
 				+ "<div class='card shadow-sm card-dark-custom'>"
 				+ "<div class='grid' style='-bs-columns: 2;'>"
 				+ "<div class='card-body grid' id='minfo'>"
 				+ "<strong class='d-inline-block mb-2 text-warning'>Movies you'd love</strong>"
-				+ "<div class='row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3'>"
-				+ "<!-- RECOMMENDED TOP 3 MOVIE CARDS -->";
-		
-//		for(JsonElement recommend : recommendationsArr) {
-//			go thru recom one by one and get the card
-//			htmlContent += "<div class='row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3'>"
-//					+ "<div class='col w-100'>"
-//					+ "<div class='card shadow-sm card-dark-custom'>"
-//					+ "<div class='grid' style='-bs-columns: 2;'>"
-//					+ "<div class='card-img-top'"
-//					+ "style='background-color: black; background: url('Media/thumbn.png'); background-repeat: no-repeat; background-size: cover; height: 250px; width: 100%'>"
-//					+ "</div>"
-//					+ "<div class='card-body grid' id='minfo'>"
-//					+ "<strong class='d-inline-block mb-0 text-white'>Movie Name</strong> "
-//					+ "<br> <small class='text-muted' id='myear'>YEAR</small>"
-//					+ "<div class='d-flex justify-content-between align-items-center'>"
-//					+ "<div class='btn-group mt-2'>"
-//					+ "<input name='movieinfo' id='movieinfo-"+ movie.get("movieid").getAsString() +"'type='button' value='View Movie' "
-//					+ "class='btn btn-sm btn-warning w-100 movieinfo' data-movieid='" + movie.get("movieid").getAsString() +"'>"
-//					+ "</div> </div> </div> </div> </div> </div> </div>";
-//		}
-				
+				+ "<div class='row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3' id='recommendationsGrid'>"
+				+ "<!-- RECOMMENDED TOP 3 MOVIE CARDS -->";				
 		htmlContent += "</div> </div> </div> </div> </div> </div>";
 		return htmlContent;
 	}

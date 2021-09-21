@@ -174,14 +174,57 @@ function onGetMovieInfoComplete(response, status) {
 }
 
 
-//like movie
-
-
-//rate movie
-
-
-//temp show movie info button
-$(document).on("click", "#showmovieinfobutton", function (event) {
-	$(".sidebarpage").hide();
-    loadMovieContents();
+//LOAD RECOMMENDATIONS
+$(document).on("click", "#recommendmovies", function (event) {
+	//Validate
+	var validationStatus = validateRecommendationInputData();
+    if (validationStatus != true) {
+        buildToast("bg-danger", "Couldn't get recommendations", validationStatus, "", "Media/error_red_sq.png");
+        $('.toast').toast('show');
+        return;
+    }
+	
+	//AJAX Call
+    $.ajax(
+        {
+            url: "MLAPI",
+            type: "GET",
+            data: "movieid="+ $(this).data("movieid") +"&task=" + $(this).data("task") + "&algorithm=" + $("#algoselect").val().trim(),
+            dataType: "text",
+            complete: function (response, status) {
+                onRecommendationComplete(response.responseText, status);
+            }
+         });
 });
+
+//VIEW MOVIE RECOMMENDATIONS
+function onRecommendationComplete(response, status) {
+    if (status == "success") {
+        var resultSet = JSON.parse(response);
+
+        if (resultSet.STATUS.trim() == "SUCCESSFUL") {
+            buildToast("bg-success", "Recommendations Received", "Movie Recommendations were received. If the Recommendations are empty that means there are no recommendations currently under the given algorithm.", "", "Media/check_green.png");
+            $('.toast').toast('show');
+            $("#recommendationsGrid").html(resultSet.RECOMMENDATIONS);
+        } else {
+            buildToast("bg-danger", "Error Occurred while getting Recommendations", resultSet.MESSAGE.trim(), "", "Media/error_red_sq.png");
+            $('.toast').toast('show');
+        }
+    } else if (status == "error") {
+        buildToast("bg-danger", "Couldn't get Recommendations", "Error occurred while getting Recommendations.", "", "Media/error_red_sq.png");
+        $('.toast').toast('show');
+    } else {
+        buildToast("bg-danger", "Couldn't get Recommendations", "Unknown Error occurred while getting Recommendations.", "", "Media/error_red_sq.png");
+        $('.toast').toast('show');
+    }
+}
+
+//VALIDATIONS
+//RECOMMENDATION DATA VALIDATION
+function validateRecommendationInputData() {
+    if ($("#algoselect").val().trim() == "") {
+        return "Algorithm name cannot be empty.";
+    }
+	    
+    return true;
+}

@@ -174,7 +174,7 @@
 										<select id="algoselect" name="algoselect" class="form-select">
 											<option selected>Logistic Regression with OneVsRest and TF-IDF</option>
 											<option>Linear SVC with OneVsRest and TF-IDF</option>
-											<option>Random Forest Classifier with OneVsRest and TF-IDF</option>
+											<option disabled>Random Forest Classifier with OneVsRest and TF-IDF</option>
 											<option>Perceptron with OneVsRest and TF-IDF</option>
 											<option>Decision Tree Regressor with OneVsRest and TF-IDF</option>
 										</select>
