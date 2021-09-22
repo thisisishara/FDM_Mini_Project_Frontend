@@ -31,8 +31,8 @@ public class DBHandler {
 		{
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			//TODO remove local
-			//conn = DriverManager.getConnection("jdbc:mysql://"+rds_host+":"+rds_port+"/"+rds_database, rds_username, rds_password);
-			conn = DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+database, username, password);
+			conn = DriverManager.getConnection("jdbc:mysql://"+rds_host+":"+rds_port+"/"+rds_database, rds_username, rds_password);
+			//conn = DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+database, username, password);
 			
 		}
 		catch (Exception e)
@@ -56,6 +56,9 @@ public class DBHandler {
 			if (dbmethod== DBMethod.LOCAL_MYSQL) {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 				conn = DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+database, username, password);
+			} else if (dbmethod== DBMethod.RDS_MYSQL) {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				conn = DriverManager.getConnection("jdbc:mysql://"+rds_host+":"+rds_port+"/"+rds_database, rds_username, rds_password);
 			}
 			
 		}
