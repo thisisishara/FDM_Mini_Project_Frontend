@@ -55,8 +55,11 @@ public class MovieDBHandler extends DBHandler{
 				return new JsonResponseBuilder().getJsonErrorResponse("Operation has been terminated due to a database connectivity issue."); 
 			}
 
-			// String query = "SELECT * FROM `movies` ORDER BY RAND() LIMIT 9;";
-			String query = "SELECT * FROM `movies` LIMIT 9;";
+			//TESTS
+			//String query = "SELECT * FROM `movies` ORDER BY RAND() LIMIT 9;";
+			//String query = "SELECT * FROM `movies` LIMIT 9;";
+			//String query = "SELECT * FROM `movies` WHERE `movieid`=200119;";
+			String query = "SELECT * FROM `movies`;";
 			
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
 
