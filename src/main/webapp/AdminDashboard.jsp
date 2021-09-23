@@ -172,16 +172,20 @@
 									</div>
 									<div class="col-md-9">
 										<select id="algoselect" name="algoselect" class="form-select">
-											<option selected>Logistic Regression with OneVsRest and TF-IDF</option>
+											<option selected>Logistic Regression with OneVsRest
+												and TF-IDF</option>
 											<option>Linear SVC with OneVsRest and TF-IDF</option>
-											<option disabled>Random Forest Classifier with OneVsRest and TF-IDF</option>
+											<option disabled>Random Forest Classifier with
+												OneVsRest and TF-IDF</option>
 											<option>Perceptron with OneVsRest and TF-IDF</option>
-											<option>Decision Tree Regressor with OneVsRest and TF-IDF</option>
+											<option>Decision Tree Regressor with OneVsRest and
+												TF-IDF</option>
 										</select>
 									</div>
 									<div class="col-md-3">
-										<button type="button" class="btn btn-dark w-100" id="predictgenre"
-											name="predictgenre" data-task="classification">Predict Genres</button>
+										<button type="button" class="btn btn-dark w-100"
+											id="predictgenre" name="predictgenre"
+											data-task="classification">Predict Genres</button>
 									</div>
 									<div class="col-md-12">
 										<textarea class="form-control" id="moviegenre" rows="1"
@@ -215,6 +219,13 @@
 						</div>
 						<div class="movieGrid mt-3" id="movieGrid">
 							<!-- DYNAMICALLY GENERATED MOVIE LIST TABLE -->
+							<!-- LOADER -->
+							<div class="bg-dark text-white rounded p-3">
+								<img src="Media/waiting.gif" class="rounded me-2" alt="..."
+									width="25px"> <strong class="me-auto">Loading
+									Movies</strong>
+							</div>
+
 						</div>
 					</div>
 				</div>
@@ -349,6 +360,24 @@
 			</div>
 			<div class="toast-body" id="liveToastBody">Hello, world! This
 				is a toast message.</div>
+		</div>
+	</div>
+	<!-- LOADER
+	<button type="button" class="btn btn-primary" id="loaderBtn">Show
+		loader</button> -->
+	<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 103">
+		<div id="loader" class="loader hide bg-dark text-white" role="alert"
+			aria-live="assertive" aria-atomic="true">
+			<div id="loaderHeaderDiv" class="loader-header bg-dark text-white">
+				<img id="loaderIcon" src="Media/waiting.gif" class="rounded me-2"
+					alt="..." width="25px"> <strong class="me-auto"
+					id="loaderHeading">Bootstrap Loader</strong> <small id="loaderTime">Just
+					Now</small>
+				<!-- <button type="button" class="btn-close btn-close-white"
+					data-dismiss="loader" aria-label="Close"></button>-->
+			</div>
+			<div class="loader-body" id="loaderBody">Hello, world! This is
+				a loader message.</div>
 		</div>
 	</div>
 	<!-- BOOTSRAP JS CDN-->

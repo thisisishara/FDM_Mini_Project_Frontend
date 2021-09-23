@@ -22,10 +22,10 @@ $(document).ready(function () {
     loadProfile();
 
     //set toast delay
-    $('.toast').toast({
-        //autohide: false,
-        delay: 5000
-    });
+    setToastDelay(5000);
+
+    //set loader delay
+    setLoaderDelay(60000);
     
     buildToast("bg-success", "Welcome.", "Good Movie Hunting!", "", "Media/check_green.png");
     $('.toast').toast('show');
@@ -129,6 +129,35 @@ function buildToast(bg, heading, body, time, icon) {
     $("#liveToastBody").text(body);
 }
 
+function setToastDelay(delay) {
+	//set toast delay
+    $('.toast').toast({
+        delay: delay
+    });
+}
+
+//GENERIC METHOD TO BUILDING DIFFERENT STYLES OF LOADERS
+//STYLES ARE PASSED AS PARAMS
+function buildLoader(bg, heading, body, time, icon) {
+	var date = new Date();
+	time = date.getHours() + ":" + ("00" + date.getMinutes()).slice(-2);
+	
+    $("#loader").removeClass();
+    $("#loader").addClass("loader hide text-white " + bg);
+    $("#loaderHeaderDiv").removeClass();
+    $("#loaderHeaderDiv").addClass("loader-header text-white " + bg);
+    $("#loaderIcon").attr("src", icon);
+    $("#loaderTime").text(time);
+    $("#loaderHeading").text(heading);
+    $("#loaderBody").text(body);
+}
+
+function setLoaderDelay(delay) {
+    $('.loader').toast({
+        delay: delay
+    });
+}
+
 //INSPECTING COOKIES FOR USER AUTHENTICATION
 function isAuthenticated() {
     //check auth cookie
@@ -183,6 +212,11 @@ $(document).on("click", "#recommendmovies", function (event) {
         $('.toast').toast('show');
         return;
     }
+    
+	//Show loader
+	$('.toast').toast('hide');
+	buildLoader("bg-dark", "Hang tight!", "We're fetching the recommendations for ya.", "", "Media/waiting.gif");
+	$('.loader').toast('show');
 	
 	//AJAX Call
     $.ajax(
@@ -199,6 +233,8 @@ $(document).on("click", "#recommendmovies", function (event) {
 
 //VIEW MOVIE RECOMMENDATIONS
 function onRecommendationComplete(response, status) {
+	$('.loader').toast('hide');
+	
     if (status == "success") {
         var resultSet = JSON.parse(response);
 

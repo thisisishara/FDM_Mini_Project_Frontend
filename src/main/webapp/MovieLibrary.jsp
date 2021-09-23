@@ -78,6 +78,13 @@
 						</div>
 						<div class="movieLibGrid mt-3" id="movieLibGrid">
 							<!-- DYNAMICALLY GENERATED MOVIE LIBRARY -->
+							<!-- LOADER -->
+							<div class="bg-dark text-white rounded p-3">
+								<img src="Media/waiting.gif" class="rounded me-2" alt="..."
+									width="25px"> <strong class="me-auto">Loading
+									Movies</strong>
+							</div>
+
 						</div>
 					</div>
 				</div>
@@ -115,9 +122,9 @@
 			</div>
 		</div>
 	</main>
-	<!-- TOAST -->
+	<!-- TOAST 
 	<button type="button" class="btn btn-primary" id="liveToastBtn">Show
-		live toast</button>
+		live toast</button>-->
 	<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 102">
 		<div id="liveToast" class="toast hide bg-danger text-white"
 			role="alert" aria-live="assertive" aria-atomic="true">
@@ -132,6 +139,24 @@
 			</div>
 			<div class="toast-body" id="liveToastBody">Hello, world! This
 				is a toast message.</div>
+		</div>
+	</div>
+	<!-- LOADER
+	<button type="button" class="btn btn-primary" id="loaderBtn">Show
+		loader</button> -->
+	<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 103">
+		<div id="loader" class="loader hide bg-dark text-white" role="alert"
+			aria-live="assertive" aria-atomic="true">
+			<div id="loaderHeaderDiv" class="loader-header bg-dark text-white">
+				<img id="loaderIcon" src="Media/waiting.gif" class="rounded me-2"
+					alt="..." width="25px"> <strong class="me-auto"
+					id="loaderHeading">Bootstrap Loader</strong> <small id="loaderTime">Just
+					Now</small>
+				<!-- <button type="button" class="btn-close btn-close-white"
+					data-dismiss="loader" aria-label="Close"></button>-->
+			</div>
+			<div class="loader-body" id="loaderBody">Hello, world! This is
+				a loader message.</div>
 		</div>
 	</div>
 	<!-- BOOTSRAP JS CDN-->

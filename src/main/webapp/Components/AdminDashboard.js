@@ -22,10 +22,10 @@ $(document).ready(function () {
     loadMovieDetails();
 
     //set toast delay
-    $('.toast').toast({
-        //autohide: false,
-        delay: 5000
-    });
+    setToastDelay(5000);
+
+    //set loader delay
+    setLoaderDelay(60000);
 });
 
 //SETTING SIDEBAR ACTIVE LINK
@@ -524,7 +524,7 @@ function readURL(input) {
 
 
 //PREDICTING GENRES
-$(document).on("click", "#predictgenre", function (event) {
+$(document).on("click", "#predictgenre", function (event) {	
 	//Validate
 	var validationStatus = validatePredictionInputData();
     if (validationStatus != true) {
@@ -532,6 +532,11 @@ $(document).on("click", "#predictgenre", function (event) {
         $('.toast').toast('show');
         return;
     }
+    
+	//Show loader
+	$('.toast').toast('hide');
+	buildLoader("bg-dark", "Hang tight!", "We're predicting the genres for ya.", "", "Media/waiting.gif");
+	$('.loader').toast('show');
 	
 	//AJAX Call
     $.ajax(
@@ -548,6 +553,8 @@ $(document).on("click", "#predictgenre", function (event) {
 
 //PREDICT GENRES RESPONSE HANDLING
 function onPredictionComplete(response, status) {
+	$('.loader').toast('hide');
+
     if (status == "success") {
         var resultSet = JSON.parse(response);
 
@@ -686,6 +693,35 @@ function buildToast(bg, heading, body, time, icon) {
     $("#liveToastTime").text(time);
     $("#liveToastHeading").text(heading);
     $("#liveToastBody").text(body);
+}
+
+function setToastDelay(delay) {
+	//set toast delay
+    $('.toast').toast({
+        delay: delay
+    });
+}
+
+//GENERIC METHOD TO BUILDING DIFFERENT STYLES OF LOADERS
+//STYLES ARE PASSED AS PARAMS
+function buildLoader(bg, heading, body, time, icon) {
+	var date = new Date();
+	time = date.getHours() + ":" + ("00" + date.getMinutes()).slice(-2);
+	
+    $("#loader").removeClass();
+    $("#loader").addClass("loader hide text-white " + bg);
+    $("#loaderHeaderDiv").removeClass();
+    $("#loaderHeaderDiv").addClass("loader-header text-white " + bg);
+    $("#loaderIcon").attr("src", icon);
+    $("#loaderTime").text(time);
+    $("#loaderHeading").text(heading);
+    $("#loaderBody").text(body);
+}
+
+function setLoaderDelay(delay) {
+    $('.loader').toast({
+        delay: delay
+    });
 }
 
 //INSPECTING COOKIES FOR USER AUTHENTICATION
