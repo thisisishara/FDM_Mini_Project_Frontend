@@ -26,7 +26,7 @@ public class MLServiceCommHandler {
 	public JsonObject getPredictions(JsonObject payload)
 	{
 		client = Client.create();
-		webRes = client.resource(LOCAL_CLASSIF_URL);
+		webRes = client.resource(HEROKU_CLASSIF_URL);
 
 		String output = webRes//.header("Authorization", SERVICE_TOKEN_FND)
 				.entity(payload.toString(), MediaType.APPLICATION_JSON)
@@ -40,7 +40,7 @@ public class MLServiceCommHandler {
 	public JsonObject getRecommendations(JsonObject payload)
 	{
 		client = Client.create();
-		webRes = client.resource(LOCAL_ASSOCIA_URL);
+		webRes = client.resource(HEROKU_ASSOCIA_URL);
 
 		String output = webRes//.header("Authorization", SERVICE_TOKEN_FND)
 				.entity(payload.toString(), MediaType.APPLICATION_JSON)

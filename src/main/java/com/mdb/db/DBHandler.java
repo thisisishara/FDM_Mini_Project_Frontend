@@ -30,8 +30,8 @@ public class DBHandler {
 		try
 		{
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			//TODO remove local
 			conn = DriverManager.getConnection("jdbc:mysql://"+rds_host+":"+rds_port+"/"+rds_database, rds_username, rds_password);
+			//TODO remove local
 			//conn = DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+database, username, password);
 			
 		}
